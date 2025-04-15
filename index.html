@@ -5,9 +5,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroXPower - Queima Gordura e Liga o Turbo Mental</title>
+  <link rel="icon" href="https://i.imgur.com/cx6WHAS.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:title" content="NeuroXPower - Queima Gordura e Liga o Turbo Mental" />
+  <meta property="og:description" content="A fórmula proibida que tá mudando o corpo e a mente das brasileiras. Transforme-se agora!" />
+  <meta property="og:image" content="https://i.imgur.com/cx6WHAS.png" />
+  <meta property="og:url" content="https://seudominio.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <style>
-   {
+    * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
@@ -65,26 +74,6 @@
       box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);
     }
 
-    .cta {
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    .cta a {
-      background-color: #00cc66;
-      color: #000;
-      padding: 14px 30px;
-      font-size: 1.1rem;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    .cta a:hover {
-      background-color: #00e676;
-    }
-
     footer {
       text-align: center;
       font-size: 0.85rem;
@@ -132,6 +121,10 @@
       text-decoration: none;
     }
 
+    .plano a:hover {
+      background: #00e676;
+    }
+
     @media(min-width: 768px) {
       .planos {
         flex-direction: row;
@@ -145,6 +138,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>NeuroXPower™</h1>
@@ -178,7 +172,7 @@
         <p style="font-size:1.5rem;">3x de R$42,33</p>
         <p>à vista R$127,00</p>
         <p>🔥 30 dias + FRETE GRÁTIS</p>
-        <a href="#">Quero Esse</a>
+        <a href="https://link.bynetglobal.com.br/5RgqgQ9ZIL?utm_source=facebook&utm_medium=cpc&utm_campaign=neuroxp1" onclick="fbq('track', 'InitiateCheckout');">Quero Esse</a>
       </div>
       <div class="plano plano-destaque">
         <h3>🔥 MAIS VENDIDO</h3>
@@ -186,26 +180,27 @@
         <p style="font-size:1.5rem;">6x de R$49,50</p>
         <p>à vista R$297,00</p>
         <p>🚀 90 dias + FRETE GRÁTIS</p>
-        <a href="#">Quero Esse</a>
+        <a href="https://link.bynetglobal.com.br/zHbRQNYUqL?utm_source=facebook&utm_medium=cpc&utm_campaign=neuroxp3" onclick="fbq('track', 'InitiateCheckout');">Quero Esse</a>
       </div>
       <div class="plano">
         <h3>5 POTES</h3>
         <p style="font-size:1.5rem;">10x de R$44,70</p>
         <p>à vista R$447,00</p>
         <p>💎 Completo + BRINDE + FRETE</p>
-        <a href="#">Quero Esse</a>
+        <a href="https://link.bynetglobal.com.br/fdE3X3NJwg?utm_source=facebook&utm_medium=cpc&utm_campaign=neuroxp5" onclick="fbq('track', 'InitiateCheckout');">Quero Esse</a>
       </div>
     </div>
     <p style="text-align:center; color:#99ffcc; margin-top:20px;">💸 Garantia 7 dias | Estoque limitado!</p>
   </section>
 
   <footer>
-    NeuroXPower™ é um suplemento natural. Consulte um profissional de saúde antes de iniciar. Política no checkout.
+    *Este site é apenas para fins informativos. Resultados variam de pessoa para pessoa. Consulte seu médico.*
   </footer>
 
   <script>
+    const pixelId = "123456789012345"; // 👉 Troca pelo teu ID real
     const pixel = document.createElement("img");
-    pixel.src = "https://www.facebook.com/tr?id=000000000000000&ev=PageView&noscript=1";
+    pixel.src = `https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`;
     pixel.style = "display:none;";
     document.body.appendChild(pixel);
   </script>
