@@ -329,13 +329,14 @@
 <body>
   <header>
     <h1>NeuroXPower™</h1>
-    <p class="slogan">Foco. Energia. Transformação.</p>
+    <p class="slogan">A Fórmula Proibida Que Derrete Gordura e Libera o Potencial da Sua Mente.</p>
     <a href="#ofertas" class="btn-ir-final">⚡ Ativar Meu Novo Eu</a>
-  </header>
+    <p id="timer-header" style="margin-top: 10px; font-weight: bold; color: #ff5; font-size: 1.1rem;"></p>
+  </header>  
 
   <section>
     <h2>🔥 Fórmula Avançada Que Derrete Gordura e Ativa o Foco</h2>
-    <p>Você vai sentir na pele: NeuroXPower™ acelera seu metabolismo, elimina gordura localizada e ainda te dá energia e foco de outro planeta.</p>
+    <p>Você vai sentir o efeito já nas primeiras cápsulas: NeuroXPower™ ativa seu metabolismo, seca gordura teimosa e te dá uma clareza mental que você nem sabia que existia.</p>
     <img src="https://i.imgur.com/3cESgYs.jpeg" alt="Produto">
     <p>Feito com ingredientes 100% naturais e aprovados pela Anvisa, NeuroXPower combina compostos termogênicos, adaptógenos e vitaminas essenciais para uma performance completa.</p>
     <div class="conteudo-detalhado">
@@ -377,37 +378,75 @@
       <p>🌿 Ingredientes como cafeína natural, chá verde, colina, bacopa monnieri, L-teanina e vitamina B12 fazem parte da composição única do NeuroXPower™.</p>
     </div>
   </section>
-
-  <div id="ofertas" class="titulo">💥 Escolha sua Oferta Especial 💥</div>
+  
+  <h2 style="margin-top:40px;">⚠️ Aviso: Só vamos manter essa promoção até o fim do estoque atual</h2>
+  <p>Estamos com baixa no estoque e a próxima remessa será reajustada. Aproveite agora o valor promocional e receba com FRETE GRÁTIS e BRINDE exclusivo.</p>
+  
+  <div id="ofertas" class="titulo">💥 Oferta Exclusiva por Tempo Limitado 💥</div>
 
   <div class="ofertas">
-    <div class="card">
-      <strong>1 POTE</strong>
-      <div class="preco">3x de R$29,90</div>
-      <div class="preco">à vista R$87,00</div>
-      <div class="beneficios">🔥 FRETE GRÁTIS</div>
-      <a href="https://link.bynetglobal.com.br/5RgqgQ9ZIL" target="_blank" class="botao">Quero Esse</a>
-    </div>
-  
     <div class="card card-destaque">
-      <strong>🔥 MAIS VENDIDO</strong>
       <strong>3 POTES</strong>
-      <div class="preco">6x de R$34,90</div>
-      <div class="preco">à vista R$197,00</div>
-      <div class="beneficios">🚀 BRINTE + FRETE GRÁTIS</div>
+      <div class="preco">3x de R$22,63</div>
+      <div class="preco"><s>R$97,00</s> à vista <strong style="color:#00ff99;">R$67,90</strong></div>
+      <div class="beneficios">🚀 BRINDE + FRETE GRÁTIS<br><span style="color:#ff5;">Somente hoje!</span></div>
+
       <a href="https://link.bynetglobal.com.br/fdE3X3NJwg" target="_blank" class="botao">Quero Esse</a>
-    </div>
-  
-    <div class="card">
-      <strong>5 POTES</strong>
-      <div class="preco">10x de R$35,90</div>
-      <div class="preco">à vista R$297,00</div>
-      <div class="beneficios">💎 CREATINNA + BRINDE + FRETE</div>
-      <a href="https://link.bynetglobal.com.br/zHbRQNYUqL" target="_blank" class="botao">Quero Esse</a>
     </div>
   </div>
 
-  <div class="garantia">🛡 Garantia 7 dias, caso não goste do produto devolvemos seu dinheiro em até 7 dias | Estoque limitado!</div>
+  <div class="garantia">🛡 Garantia de 7 dias, caso não goste do produto devolvemos seu dinheiro | Estoque limitado!</div>
+  <footer style="background:#001a00; padding:40px 20px; margin-top:60px; color:#b3ffcc; font-size:14px;">
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+  
+      <div style="margin-bottom:20px;">
+        <strong>NeuroXPower™</strong><br>
+        CNPJ: 12.345.678/0001-99<br>
+        Rua das Energias, 777 - São Paulo/SP<br>
+        Atendimento: suporte@neuroxpoweroficial.com
+      </div>
+  
+      <div style="margin-bottom:20px; display:flex; justify-content:center; gap:15px; flex-wrap:wrap;">
+        <div style="border:1px solid #00ff99; padding:6px 12px; border-radius:5px;">🔒 Site Seguro</div>
+        <div style="border:1px solid #00ff99; padding:6px 12px; border-radius:5px;">✔️ Compra Garantida</div>
+        <div style="border:1px solid #00ff99; padding:6px 12px; border-radius:5px;">💳 Pagamento Criptografado</div>
+      </div>
+  
+      <p style="opacity: 0.7; font-size: 12px;">
+        Este site não é afiliado ao Facebook ou a qualquer entidade do Facebook. Após sair do Facebook, a responsabilidade é inteiramente deste site. As informações fornecidas não devem ser consideradas como substitutas para aconselhamento médico.
+      </p>
+  
+      <p style="margin-top:15px; font-size: 12px; color: #66ff99;">© <span id="ano"></span> NeuroXPower™ - Todos os direitos reservados.</p>
+    </div>
+  
+    <script>
+      document.getElementById("ano").innerText = new Date().getFullYear();
+    </script>
+    <div class="garantia">🛡 Garantia de 7 dias, caso não goste do produto devolvemos seu dinheiro | Estoque limitado!</div>
+
+    <script>
+      const fimCabecalho = new Date();
+      fimCabecalho.setMinutes(fimCabecalho.getMinutes() + 15);
+    
+      const intervaloHeader = setInterval(() => {
+        const agora = new Date();
+        const diff = fimCabecalho - agora;
+    
+        if (diff <= 0) {
+          document.getElementById("timer-header").textContent = "⛔ Tempo expirado!";
+          clearInterval(intervaloHeader);
+        } else {
+          const min = Math.floor(diff / 60000);
+          const seg = Math.floor((diff % 60000) / 1000);
+          document.getElementById("timer-header").textContent = `⏳ Oferta expira em: ${min}m ${seg < 10 ? '0' + seg : seg}s`;
+        }
+      }, 1000);
+    </script>
+    
+    </body>
+    </html>
+    
+  </footer> 
 </body>
 
 </html>
