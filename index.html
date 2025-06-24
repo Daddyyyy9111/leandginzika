@@ -325,8 +325,8 @@
             text-align: center;
         }
         .special-offer-section .item-card.selected {
-             border: var(--selected-border);
-             box-shadow: var(--selected-shadow);
+            border: var(--selected-border);
+            box-shadow: var(--selected-shadow);
         }
 
         .special-offer-section .item-card img {
@@ -372,7 +372,7 @@
                 font-size: 1.1em;
             }
             .item-list {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Força uma coluna em telas menores */
             }
             .item-card img {
                 width: 60px;
@@ -422,7 +422,7 @@
                 margin-bottom: 10px;
             }
             .item-card {
-                flex-direction: column;
+                flex-direction: column; /* Em telas muito pequenas, empilha imagem e texto */
                 align-items: center;
                 text-align: center;
                 padding: 10px;
@@ -430,7 +430,7 @@
             .item-card img {
                 width: 50px;
                 height: 50px;
-                margin: 0 auto 8px auto;
+                margin: 0 auto 8px auto; /* Centraliza a imagem */
             }
             /* Ajuste para cards sem imagem em mobile */
             #pizza1-borda-list .item-card,
@@ -457,7 +457,7 @@
                 font-size: 1.4em;
             }
             .special-offer-section .item-list {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Força uma coluna para brotinhos em telas muito pequenas */
             }
             .special-offer-section .item-card img {
                 width: 60px;
@@ -631,7 +631,7 @@
                         <p>Mussarela e fatias selecionadas de pepperoni.</p>
                     </div>
                 </div>
-                </div>
+            </div>
 
             <h3 class="subsection-title">Adicione uma Borda para sua Segunda Pizza (se aplicável)</h3>
             <div class="item-list" id="pizza2-borda-list">
@@ -759,195 +759,165 @@
     <script>
         const phoneNumber = "552135999600295"; // Substitua pelo NÚMERO REAL do WhatsApp da pizzaria (com código do país e DDD)
 
-        // Função para lidar com a seleção única de itens dentro de um grupo
+        // Objeto para armazenar as seleções do usuário e seus preços
+        const selections = {
+            'pizza1-sabor': { value: '', price: 0 },
+            'pizza1-borda': { value: '', price: 0 },
+            'pizza2-sabor': { value: 'Não Quero Segunda Pizza', price: 0 }, // Padrão
+            'pizza2-borda': { value: 'Normal', price: 0 }, // Padrão
+            'refrigerante': { value: '', price: 0 },
+            'brotinho-doce': [], // Pode ter múltiplos brotinhos
+        };
+
+        // Preço base da combinação 2 pizzas + refri (valor fixo)
+        const basePriceCombo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--base-price-combo'));
+
+        // Função para lidar com a seleção única de itens dentro de um grupo (exclui brotinhos)
         function handleSelection(event) {
             const clickedCard = event.currentTarget;
             const group = clickedCard.dataset.group;
-            
+            const value = clickedCard.dataset.value;
+            const price = parseFloat(clickedCard.dataset.price || 0); // Pega o preço, ou 0 se não houver
+
+            // Se for um brotinho, usa a lógica de seleção múltipla
+            if (group === 'brotinho-doce') {
+                toggleBrotinhoSelection(clickedCard, value, price);
+                return;
+            }
+
             // Remove a classe 'selected' de todos os itens do mesmo grupo
             document.querySelectorAll(`.item-card[data-group="${group}"]`).forEach(card => {
                 card.classList.remove('selected');
             });
 
-            // Adiciona a classe 'selected' apenas ao item clicado
+            // Adiciona a classe 'selected' ao item clicado
             clickedCard.classList.add('selected');
-            updateTotalPrice(); // Atualiza o preço total ao selecionar um item
-        }
 
-        // Adiciona event listeners a todos os cartões de item para seleção única
-        document.querySelectorAll('.item-list:not(#brotinho-doce-list) .item-card').forEach(card => {
-            card.addEventListener('click', handleSelection);
-        });
+            // Atualiza a seleção no objeto `selections`
+            selections[group] = { value, price };
 
-        // Adiciona um event listener específico para a seção de brotinhos doces para permitir múltiplas seleções
-        document.querySelectorAll('#brotinho-doce-list .item-card').forEach(card => {
-            card.removeEventListener('click', handleSelection); // Garante que não há um listener de seleção única duplicado
-            card.addEventListener('click', (event) => {
-                event.currentTarget.classList.toggle('selected'); // Alterna a seleção
-                updateTotalPrice(); // Atualiza o preço total
-            });
-        });
-
-
-        // Função para calcular e exibir o preço total estimado
-        function updateTotalPrice() {
-            let total = 0;
-            const basePriceCombo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--base-price-combo'));
-
-            const selectedPizza1Sabor = document.querySelector('.item-card[data-group="pizza1-sabor"].selected');
-            const selectedPizza1Borda = document.querySelector('.item-card[data-group="pizza1-borda"].selected');
-            const selectedPizza2Sabor = document.querySelector('.item-card[data-group="pizza2-sabor"].selected');
-            const selectedPizza2Borda = document.querySelector('.item-card[data-group="pizza2-borda"].selected');
-            const selectedRefrigerante = document.querySelector('.item-card[data-group="refrigerante"].selected');
-            const selectedBrotinhosDoces = document.querySelectorAll('.item-card[data-group="brotinho-doce"].selected');
-
-            // Verifica se a combinação de 2 pizzas + refri está completa
-            const comboIsSelected = selectedPizza1Sabor && 
-                                   selectedPizza2Sabor && selectedPizza2Sabor.dataset.value !== "Não Quero Segunda Pizza" &&
-                                   selectedRefrigerante && selectedRefrigerante.dataset.value !== "Não Quero Refrigerante";
-
-            if (comboIsSelected) {
-                total += basePriceCombo; // Adiciona o preço base da combinação
-            }
-
-            // Adiciona o preço das bordas, se selecionadas
-            if (selectedPizza1Borda) {
-                total += parseFloat(selectedPizza1Borda.dataset.price);
-            }
-            // A borda da segunda pizza só adiciona se uma segunda pizza REALMENTE foi selecionada
-            if (selectedPizza2Sabor && selectedPizza2Sabor.dataset.value !== "Não Quero Segunda Pizza") {
-                if (selectedPizza2Borda) {
-                    total += parseFloat(selectedPizza2Borda.dataset.price);
+            // Se a segunda pizza for "Não Quero Segunda Pizza", deseleciona a borda da segunda pizza
+            if (group === 'pizza2-sabor' && value === 'Não Quero Segunda Pizza') {
+                const pizza2BordaList = document.getElementById('pizza2-borda-list');
+                const defaultBorda2 = pizza2BordaList.querySelector('.item-card[data-value="Normal"]');
+                if (defaultBorda2) {
+                    document.querySelectorAll('.item-card[data-group="pizza2-borda"]').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    defaultBorda2.classList.add('selected');
+                    selections['pizza2-borda'] = { value: 'Normal', price: 0 };
                 }
             }
-            
-            // Adiciona o preço dos brotinhos doces
-            selectedBrotinhosDoces.forEach(brotinho => {
-                total += parseFloat(brotinho.dataset.price);
+
+            updateTotalPrice();
+        }
+
+        // Função para lidar com a seleção de brotinhos (pode selecionar múltiplos)
+        function toggleBrotinhoSelection(clickedCard, value, price) {
+            const index = selections['brotinho-doce'].findIndex(item => item.value === value);
+
+            if (index > -1) {
+                // Se já estiver selecionado, remove
+                selections['brotinho-doce'].splice(index, 1);
+                clickedCard.classList.remove('selected');
+            } else {
+                // Se não estiver selecionado, adiciona
+                selections['brotinho-doce'].push({ value, price });
+                clickedCard.classList.add('selected');
+            }
+            updateTotalPrice();
+        }
+
+        // Função para calcular e atualizar o preço total
+        function updateTotalPrice() {
+            let total = basePriceCombo; // Começa com o preço fixo do combo
+
+            // Adiciona preços das bordas
+            total += selections['pizza1-borda'].price;
+            // Só adiciona a borda da segunda pizza se uma segunda pizza foi selecionada (e não "Não Quero Segunda Pizza")
+            if (selections['pizza2-sabor'].value !== 'Não Quero Segunda Pizza') {
+                total += selections['pizza2-borda'].price;
+            }
+
+            // Adiciona preços dos brotinhos
+            selections['brotinho-doce'].forEach(brotinho => {
+                total += brotinho.price;
             });
 
+            // Atualiza o display do preço
             document.getElementById('total-price-display').innerText = `Total Estimado: R$ ${total.toFixed(2).replace('.', ',')}`;
         }
 
-        // Inicializa o preço total ao carregar a página
-        document.addEventListener('DOMContentLoaded', updateTotalPrice);
-
-
+        // Função para redirecionar para o WhatsApp com a mensagem do pedido
         function redirectToWhatsApp() {
-            const selectedPizza1Sabor = document.querySelector('.item-card[data-group="pizza1-sabor"].selected');
-            const selectedPizza1Borda = document.querySelector('.item-card[data-group="pizza1-borda"].selected');
-            const selectedPizza2Sabor = document.querySelector('.item-card[data-group="pizza2-sabor"].selected');
-            const selectedPizza2Borda = document.querySelector('.item-card[data-group="pizza2-borda"].selected');
-            const selectedRefrigerante = document.querySelector('.item-card[data-group="refrigerante"].selected');
-            const selectedBrotinhosDoces = document.querySelectorAll('.item-card[data-group="brotinho-doce"].selected');
+            let message = `Olá! Gostaria de fazer um pedido da Pizzaria Express! Segue meu pedido:\n\n`;
 
-            const observacoes = document.getElementById('observacoes').value.trim();
-            const basePriceCombo = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--base-price-combo'));
+            // Pizza Principal
+            message += `🍕 *Pizza Principal:* ${selections['pizza1-sabor'].value}\n`;
+            message += `  Borda da Pizza Principal: ${selections['pizza1-borda'].value} (R$ ${selections['pizza1-borda'].price.toFixed(2).replace('.', ',')})\n`;
 
-
-            let message = "Olá, Pizzaria Express! Meu pedido é:\n\n";
-
-            let totalOrderPrice = 0; 
-            let comboApplied = false;
-
-            // --- Validação e Adição da Pizza Principal ---
-            if (selectedPizza1Sabor) {
-                const sabor1 = selectedPizza1Sabor.dataset.value;
-                message += `*1ª Pizza (Sabor):* ${sabor1}\n`;
-
-                if (selectedPizza1Borda) {
-                    const borda1 = selectedPizza1Borda.dataset.value;
-                    const precoBorda1 = parseFloat(selectedPizza1Borda.dataset.price);
-                    message += `*1ª Pizza (Borda):* ${borda1}`;
-                    if (precoBorda1 > 0) {
-                        message += ` (R$ ${precoBorda1.toFixed(2).replace('.', ',')})`;
-                    }
-                    message += `\n`;
-                    totalOrderPrice += precoBorda1;
-                } else {
-                    alert("Por favor, escolha a borda para sua Pizza Principal.");
-                    return;
-                }
+            // Segunda Pizza
+            if (selections['pizza2-sabor'].value !== 'Não Quero Segunda Pizza') {
+                message += `🍕 *Segunda Pizza:* ${selections['pizza2-sabor'].value}\n`;
+                message += `  Borda da Segunda Pizza: ${selections['pizza2-borda'].value} (R$ ${selections['pizza2-borda'].price.toFixed(2).replace('.', ',')})\n`;
             } else {
-                alert("Por favor, escolha o sabor para sua Pizza Principal.");
-                return;
+                message += `🍕 *Segunda Pizza:* Não quero outra pizza (Combo com 1 pizza aplicada)\n`;
             }
 
-            // --- Validação e Adição da Segunda Pizza (Inteira) ---
-            if (selectedPizza2Sabor) {
-                const sabor2 = selectedPizza2Sabor.dataset.value;
+            // Refrigerante
+            message += `🥤 *Refrigerante:* ${selections['refrigerante'].value}\n`;
 
-                if (sabor2 !== "Não Quero Segunda Pizza") {
-                    message += `\n*2ª Pizza (Sabor):* ${sabor2}\n`;
-
-                    if (selectedPizza2Borda) {
-                        const borda2 = selectedPizza2Borda.dataset.value;
-                        const precoBorda2 = parseFloat(selectedPizza2Borda.dataset.price);
-                        message += `*2ª Pizza (Borda):* ${borda2}`;
-                        if (precoBorda2 > 0) {
-                            message += ` (R$ ${precoBorda2.toFixed(2).replace('.', ',')})`;
-                        }
-                        message += `\n`;
-                        totalOrderPrice += precoBorda2;
-                    } else {
-                        alert("Por favor, escolha a borda para sua Segunda Pizza.");
-                        return;
-                    }
-                } else {
-                    message += `\n*2ª Pizza:* Não Adicionada\n`;
-                }
-            } else {
-                alert("Por favor, escolha uma opção para a Segunda Pizza.");
-                return;
-            }
-
-            // --- Validação e Adição do Refrigerante ---
-            if (selectedRefrigerante) {
-                const refri = selectedRefrigerante.dataset.value;
-                message += `\n*Refrigerante:* ${refri} (Grátis)\n`;
-            } else {
-                alert("Por favor, escolha seu refrigerante.");
-                return;
-            }
-            
-            // Verifica se a combinação de 2 pizzas + refri está completa para aplicar o preço base
-            const comboIsSelected = selectedPizza1Sabor && 
-                                   selectedPizza2Sabor && selectedPizza2Sabor.dataset.value !== "Não Quero Segunda Pizza" &&
-                                   selectedRefrigerante && selectedRefrigerante.dataset.value !== "Não Quero Refrigerante";
-
-            if (comboIsSelected) {
-                totalOrderPrice += basePriceCombo;
-                comboApplied = true;
-                message += `\n🎉 *Preço da Combo (2 Pizzas + Refri): R$ ${basePriceCombo.toFixed(2).replace('.', ',')}*\n`;
-            } 
-
-            // --- Adição das Observações ---
-            if (observacoes) {
-                message += `\n*Observações Adicionais:* ${observacoes}\n`;
-            } else {
-                message += `\n*Observações Adicionais:* Nenhuma.\n`;
-            }
-            
-            // --- Adição dos Brotinhos Doces (abaixo das observações) ---
-            if (selectedBrotinhosDoces.length > 0) {
-                message += "\n*DOCES EXTRAS: Brotinho(s) Adicionado(s):*\n";
-                selectedBrotinhosDoces.forEach(brotinho => {
-                    const brotinhoValue = brotinho.dataset.value;
-                    const brotinhoPrice = parseFloat(brotinho.dataset.price);
-                    message += `- ${brotinhoValue} (R$ ${brotinhoPrice.toFixed(2).replace('.', ',')})\n`;
-                    totalOrderPrice += brotinhoPrice;
+            // Brotinhos
+            if (selections['brotinho-doce'].length > 0) {
+                message += `\n✨ *Brotinhos Adicionais:*\n`;
+                selections['brotinho-doce'].forEach(brotinho => {
+                    message += `  - ${brotinho.value} (R$ ${brotinho.price.toFixed(2).replace('.', ',')})\n`;
                 });
             }
 
-            // Adiciona o total estimado na mensagem final
-            message += `\n*TOTAL ESTIMADO DO PEDIDO: R$ ${totalOrderPrice.toFixed(2).replace('.', ',')}*\n`;
-            message += "\nPara confirmar, aguardamos sua mensagem!";
+            // Observações
+            const observacoes = document.getElementById('observacoes').value.trim();
+            if (observacoes) {
+                message += `\n📝 *Observações:* ${observacoes}\n`;
+            }
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            // Preço Total
+            const totalDisplay = document.getElementById('total-price-display').innerText;
+            message += `\n💰 *Total Estimado:* ${totalDisplay.replace('Total Estimado: ', '')}\n\n`;
+            message += `Por favor, confirme meu pedido e o valor final. Obrigado!`;
 
-            window.open(whatsappURL, '_blank');
+            // Codifica a mensagem para URL
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
         }
+
+        // Adiciona event listeners a todos os cards de seleção
+        document.querySelectorAll('.item-card').forEach(card => {
+            card.addEventListener('click', handleSelection);
+        });
+
+        // Seleções padrão ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seleciona a primeira opção de cada grupo como padrão (ou a opção "Não Quero...")
+            const defaultSelections = [
+                { group: 'pizza1-sabor', selector: '.item-card:first-child' },
+                { group: 'pizza1-borda', selector: '.item-card[data-value="Normal"]' },
+                { group: 'pizza2-sabor', selector: '.item-card[data-value="Não Quero Segunda Pizza"]' },
+                { group: 'pizza2-borda', selector: '.item-card[data-value="Normal"]' },
+                { group: 'refrigerante', selector: '.item-card[data-value="Coca-Cola 2L"]' }, // Mudança para Coca-Cola como padrão
+            ];
+
+            defaultSelections.forEach(({ group, selector }) => {
+                const defaultCard = document.querySelector(`.item-list[id$="-list"][data-group="${group}"] ${selector}`);
+                if (defaultCard) {
+                    defaultCard.click(); // Simula um clique para ativar a seleção e atualizar o preço
+                }
+            });
+
+            // Garante que o total é atualizado na carga inicial, caso não haja seleções que ativem o clique
+            updateTotalPrice();
+        });
+
     </script>
 </body>
 </html>
