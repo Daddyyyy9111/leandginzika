@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pizzaria Express - Monte seu Pedido</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@600;700;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #2a7eef; /* Azul Vibrante */
@@ -30,41 +30,43 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden; /* Evita rolagem horizontal indesejada */
         }
 
         .container {
-            max-width: 750px; /* Reduzindo um pouco */
-            margin: 30px auto; /* Margem menor */
-            padding: 25px; /* Padding menor */
+            max-width: 700px; /* Reduzindo um pouco mais para mobile */
+            margin: 25px auto; /* Margem ajustada */
+            padding: 20px; /* Padding ajustado */
             background-color: var(--card-background);
-            border-radius: 12px; /* Bordas mais suaves */
+            border-radius: 12px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             border-top: 5px solid var(--primary-color);
+            box-sizing: border-box; /* Garante que padding e borda não aumentem o tamanho total */
         }
 
         h1 {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.2em; /* Tamanho menor */
+            font-size: 2em; /* Tamanho ajustado */
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 30px; /* Espaçamento menor */
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px; /* Espaçamento menor */
             font-weight: 700;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.5px;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
 
         h1 span {
-            font-size: 1.3em;
+            font-size: 1.2em; /* Emojis um pouco menores */
         }
 
         .section-group {
-            margin-bottom: 40px; /* Espaçamento menor entre seções */
-            padding-top: 20px;
+            margin-bottom: 35px; /* Espaçamento ajustado */
+            padding-top: 15px;
             border-top: 1px dashed var(--border-color);
         }
         .section-group:first-of-type {
@@ -74,9 +76,9 @@
 
         .section-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.6em; /* Tamanho menor */
+            font-size: 1.5em; /* Tamanho ajustado */
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             font-weight: 700;
             text-align: center;
             position: relative;
@@ -85,40 +87,41 @@
             content: '';
             position: absolute;
             left: 50%;
-            bottom: -8px;
+            bottom: -6px; /* Ajuste para linha */
             transform: translateX(-50%);
-            width: 50px; /* Linha menor */
+            width: 40px; /* Linha menor */
             height: 2px;
             background-color: var(--secondary-color);
             border-radius: 1px;
         }
 
         .subsection-title {
-            font-size: 1.2em; /* Tamanho menor */
+            font-size: 1.1em; /* Tamanho ajustado */
             color: var(--text-color);
-            margin-top: 25px;
-            margin-bottom: 15px;
+            margin-top: 20px;
+            margin-bottom: 12px;
             font-weight: 600;
             text-align: center;
         }
 
         .item-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Cards mais compactos */
-            gap: 15px; /* Espaçamento reduzido */
-            margin-bottom: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Cards mais compactos */
+            gap: 12px; /* Espaçamento reduzido */
+            margin-bottom: 12px;
         }
 
         .item-card {
             display: flex;
-            align-items: center; /* Centraliza verticalmente o conteúdo */
+            align-items: center;
             background-color: var(--card-background);
-            padding: 15px; /* Padding reduzido */
-            border-radius: 8px; /* Bordas menos arredondadas */
+            padding: 12px; /* Padding reduzido */
+            border-radius: 8px;
             border: 1px solid var(--border-color);
             transition: all 0.2s ease-in-out;
             cursor: pointer;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); /* Sombra mais leve */
+            box-sizing: border-box; /* Importante para flexbox/grid */
         }
 
         .item-card.selected {
@@ -129,71 +132,79 @@
 
         .item-card:hover:not(.selected) {
             border-color: var(--secondary-color);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
             transform: translateY(-1px);
         }
 
         .item-card img {
-            width: 70px; /* Imagens menores */
-            height: 70px;
+            width: 60px; /* Imagens menores */
+            height: 60px;
             border-radius: 6px;
             object-fit: cover;
-            margin-right: 15px;
-            flex-shrink: 0;
+            margin-right: 12px;
+            flex-shrink: 0; /* Impede a imagem de encolher */
             border: 1px solid var(--border-color);
         }
+
         /* Remover imagem para bordas e refrigerantes */
         #pizza1-borda-list .item-card img,
         #pizza2-borda-list .item-card img,
         #refrigerante-list .item-card img {
-            display: none; /* Oculta as imagens */
+            display: none;
         }
+
         /* Ajustar o padding quando não há imagem */
         #pizza1-borda-list .item-card,
         #pizza2-borda-list .item-card,
         #refrigerante-list .item-card {
-            padding: 10px 15px; /* Padding menor, sem espaço para imagem */
-            justify-content: center; /* Centraliza o texto */
+            padding: 10px 15px; /* Padding horizontal ligeiramente maior */
+            justify-content: center; /* Centraliza conteúdo quando não há imagem */
             text-align: center;
         }
+        /* Remover margem left para itens sem imagem para centralizar melhor */
         #pizza1-borda-list .item-card .item-info,
         #pizza2-borda-list .item-card .item-info,
         #refrigerante-list .item-card .item-info {
-            margin-left: 0; /* Remove margem que compensava a imagem */
+            margin-left: 0;
+            flex-grow: 0; /* Não precisa crescer tanto se o conteúdo é centralizado */
         }
+        /* Centraliza o h3 quando o item não tem imagem */
         #pizza1-borda-list .item-card h3,
         #pizza2-borda-list .item-card h3,
         #refrigerante-list .item-card h3 {
-             justify-content: center; /* Centraliza o título com o preço */
+             justify-content: center;
         }
-
 
         .item-info {
             flex-grow: 1;
+            display: flex; /* Transforma em flex para alinhar nome e preço */
+            flex-direction: column; /* Coloca nome e descrição em coluna */
+            align-items: flex-start; /* Alinha o texto à esquerda por padrão */
         }
 
         .item-info h3 {
-            font-size: 1.1em; /* Tamanho menor */
-            margin: 0 0 4px 0;
+            font-size: 1em; /* Tamanho ajustado */
+            margin: 0; /* Remove margem padrão */
             color: var(--text-color);
             font-weight: 700;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-between; /* Espaço entre nome e preço */
             align-items: center;
+            width: 100%; /* Ocupa toda a largura disponível */
         }
-
+        /* Específico para o span.price dentro do h3, para espaçamento */
         .item-info h3 .price {
-            font-size: 0.95em; /* Preço menor */
+            font-size: 0.9em; /* Preço um pouco menor */
             color: var(--price-color);
             font-weight: 700;
-            margin-left: 10px;
-            white-space: nowrap;
+            margin-left: 8px; /* *** AQUI ESTÁ O ESPAÇAMENTO DA BORDA/REFRIGERANTE E O PREÇO *** */
+            white-space: nowrap; /* Evita quebra de linha do preço */
         }
 
         .item-info p {
-            font-size: 0.85em; /* Descrição menor */
+            font-size: 0.8em; /* Descrição menor */
             color: var(--light-text-color);
-            margin: 0;
+            margin: 2px 0 0 0; /* Margem superior para separar do h3 */
         }
         /* Esconder descrição para bordas e refrigerantes */
         #pizza1-borda-list .item-card p,
@@ -203,16 +214,16 @@
         }
 
         .notes-section {
-            margin-top: 35px;
-            margin-bottom: 35px;
-            padding-top: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            padding-top: 15px;
             border-top: 1px dashed var(--border-color);
         }
 
         .notes-section label {
             display: block;
-            margin-bottom: 10px;
-            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-size: 1em;
             font-weight: 600;
             color: var(--primary-color);
             text-align: center;
@@ -220,12 +231,12 @@
 
         .notes-section textarea {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             font-family: 'Inter', sans-serif;
-            font-size: 0.95em;
-            min-height: 80px; /* Altura menor */
+            font-size: 0.9em;
+            min-height: 70px; /* Altura menor */
             resize: vertical;
             box-sizing: border-box;
             background-color: #fcfdfe;
@@ -238,89 +249,89 @@
 
         .total-price-display {
             text-align: center;
-            font-size: 1.6em; /* Tamanho menor */
+            font-size: 1.5em; /* Tamanho ajustado */
             font-weight: 700;
             color: var(--primary-color);
-            margin-top: 25px;
-            margin-bottom: 25px;
-            padding: 12px; /* Padding menor */
-            background-color: #e6f2ff; /* Azul muito claro */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #e6f2ff;
             border-radius: 8px;
             border: 2px dashed var(--primary-color);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .order-button {
             width: 100%;
-            padding: 16px; /* Padding reduzido */
+            padding: 14px; /* Padding reduzido */
             background-color: var(--primary-color);
             color: #fff;
             border: none;
             border-radius: 10px;
-            font-size: 1.3em; /* Tamanho menor */
+            font-size: 1.2em; /* Tamanho ajustado */
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.5px;
         }
 
         .order-button:hover {
-            background-color: #1a6ac9; /* Azul um pouco mais escuro */
+            background-color: #1a6ac9;
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
         }
 
         .order-button:active {
             transform: translateY(0);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         /* Seção de Oferta Especial (Brotinho) */
         .special-offer-section {
-            background-color: #fff2f7; /* Fundo rosa claro */
+            background-color: #fff2f7;
             border: 2px solid var(--offer-color);
             border-radius: 12px;
-            padding: 20px;
-            margin-top: 40px;
-            margin-bottom: 15px;
+            padding: 18px; /* Padding ajustado */
+            margin-top: 35px;
+            margin-bottom: 10px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.06);
         }
 
         .special-offer-section h2 {
             font-family: 'Montserrat', sans-serif;
             color: var(--offer-color);
-            font-size: 1.8em; /* Tamanho menor */
-            margin-bottom: 15px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            font-size: 1.6em; /* Tamanho ajustado */
+            margin-bottom: 12px;
+            text-shadow: 0.5px 0.5px 1px rgba(0,0,0,0.03);
             font-weight: 700;
         }
 
         .special-offer-section p {
-            font-size: 1em; /* Tamanho menor */
+            font-size: 0.9em; /* Tamanho ajustado */
             color: var(--light-text-color);
-            margin-bottom: 20px;
-            line-height: 1.4;
+            margin-bottom: 18px;
+            line-height: 1.3;
         }
 
         .special-offer-section .item-list {
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Mais compacto para brotinhos */
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* Mais compacto para brotinhos */
+            gap: 10px; /* Espaçamento reduzido */
         }
 
         .special-offer-section .item-card {
             background-color: var(--card-background);
             border: 1px solid var(--offer-color);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.04);
             flex-direction: column;
-            padding: 12px;
+            padding: 10px;
             align-items: center;
             text-align: center;
         }
@@ -330,9 +341,9 @@
         }
 
         .special-offer-section .item-card img {
-            width: 80px; /* Imagem brotinho menor */
-            height: 80px;
-            margin: 0 auto 10px auto;
+            width: 70px; /* Imagem brotinho menor */
+            height: 70px;
+            margin: 0 auto 8px auto;
             border: none;
             border-radius: 8px;
         }
@@ -340,65 +351,70 @@
         .special-offer-section .item-info h3 {
             flex-direction: column;
             align-items: center;
-            font-size: 1em;
+            font-size: 0.95em; /* Tamanho ajustado */
             text-align: center;
             margin-bottom: 0;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .special-offer-section .item-info h3 .price {
-            font-size: 1.1em;
+            font-size: 1em; /* Preço brotinho ajustado */
             color: var(--offer-color);
             margin-left: 0;
-            margin-top: 6px;
-        }
-        .special-offer-section .item-info p {
-            display: none;
+            margin-top: 5px;
         }
 
-        /* Responsividade */
+        /* Responsividade Otimizada */
         @media (max-width: 768px) {
             .container {
-                margin: 20px 12px;
-                padding: 20px;
+                margin: 20px 10px;
+                padding: 18px;
             }
             h1 {
-                font-size: 1.8em;
+                font-size: 1.7em;
             }
             .section-title {
-                font-size: 1.4em;
+                font-size: 1.3em;
             }
             .subsection-title {
-                font-size: 1.1em;
+                font-size: 1em;
             }
             .item-list {
                 grid-template-columns: 1fr; /* Força uma coluna em telas menores */
+                gap: 10px;
+            }
+            .item-card {
+                padding: 10px;
             }
             .item-card img {
-                width: 60px;
-                height: 60px;
+                width: 55px;
+                height: 55px;
+                margin-right: 10px;
             }
             /* Ajuste para cards sem imagem em mobile */
             #pizza1-borda-list .item-card,
             #pizza2-borda-list .item-card,
             #refrigerante-list .item-card {
-                padding: 8px 10px;
+                padding: 8px 12px;
             }
             .item-info h3 {
-                font-size: 1em;
+                font-size: 0.95em;
+            }
+            .item-info p {
+                font-size: 0.75em;
             }
             .order-button {
-                font-size: 1.2em;
-                padding: 14px;
+                font-size: 1.1em;
+                padding: 12px;
             }
             .total-price-display {
-                font-size: 1.5em;
+                font-size: 1.4em;
             }
             .special-offer-section h2 {
-                font-size: 1.6em;
+                font-size: 1.5em;
             }
             .special-offer-section .item-list {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 2 colunas para brotinhos, se couber */
             }
         }
 
@@ -408,56 +424,66 @@
                 padding: 15px;
             }
             h1 {
-                font-size: 1.6em;
-                margin-bottom: 20px;
-                padding-bottom: 8px;
+                font-size: 1.5em;
+                margin-bottom: 18px;
+                padding-bottom: 6px;
             }
             .section-title {
-                font-size: 1.2em;
-                margin-bottom: 15px;
+                font-size: 1.1em;
+                margin-bottom: 12px;
             }
             .subsection-title {
-                font-size: 1em;
-                margin-top: 20px;
-                margin-bottom: 10px;
+                font-size: 0.95em;
+                margin-top: 18px;
+                margin-bottom: 8px;
             }
             .item-card {
-                flex-direction: column; /* Em telas muito pequenas, empilha imagem e texto */
+                flex-direction: column; /* Empilha imagem e texto */
                 align-items: center;
                 text-align: center;
-                padding: 10px;
+                padding: 8px; /* Padding menor */
             }
             .item-card img {
-                width: 50px;
-                height: 50px;
-                margin: 0 auto 8px auto; /* Centraliza a imagem */
+                width: 45px;
+                height: 45px;
+                margin: 0 auto 6px auto;
             }
             /* Ajuste para cards sem imagem em mobile */
             #pizza1-borda-list .item-card,
             #pizza2-borda-list .item-card,
             #refrigerante-list .item-card {
-                padding: 6px 8px;
+                padding: 6px 10px; /* Padding ajustado */
             }
-            .item-info h3, .item-info p {
-                text-align: center;
-                margin-left: 0;
+            .item-info {
+                align-items: center; /* Centraliza o texto quando em coluna */
+            }
+            .item-info h3 {
+                font-size: 0.9em;
+                flex-direction: column; /* Força nome e preço a ficarem um abaixo do outro */
+                margin-bottom: 2px; /* Pequena margem abaixo do nome */
             }
             .item-info h3 .price {
-                margin-left: 0;
-                margin-top: 4px;
+                margin-left: 0; /* Remove margin-left quando em coluna */
+                margin-top: 4px; /* Adiciona margem superior para separar do nome */
+                font-size: 0.9em;
+            }
+            .item-info p {
+                font-size: 0.7em;
+                margin-top: 0;
             }
             .order-button {
-                font-size: 1.1em;
-                padding: 12px;
+                font-size: 1em;
+                padding: 10px;
             }
             .total-price-display {
+                font-size: 1.2em;
+                padding: 8px;
+            }
+            .special-offer-section h2 {
                 font-size: 1.3em;
             }
-             .special-offer-section h2 {
-                font-size: 1.4em;
-            }
             .special-offer-section .item-list {
-                grid-template-columns: 1fr; /* Força uma coluna para brotinhos em telas muito pequenas */
+                grid-template-columns: 1fr; /* Brotinhos em coluna única em telas muito pequenas */
             }
             .special-offer-section .item-card img {
                 width: 60px;
@@ -797,6 +823,7 @@
             selections[group] = { value, price };
 
             // Se a segunda pizza for "Não Quero Segunda Pizza", deseleciona a borda da segunda pizza
+            // E garante que a borda "Normal" esteja selecionada (preço 0)
             if (group === 'pizza2-sabor' && value === 'Não Quero Segunda Pizza') {
                 const pizza2BordaList = document.getElementById('pizza2-borda-list');
                 const defaultBorda2 = pizza2BordaList.querySelector('.item-card[data-value="Normal"]');
@@ -850,41 +877,39 @@
 
         // Função para redirecionar para o WhatsApp com a mensagem do pedido
         function redirectToWhatsApp() {
-            let message = `Olá! Gostaria de fazer um pedido da Pizzaria Express! Segue meu pedido:\n\n`;
+            let message = `Olá! Gostaria de fazer um pedido da Pizzaria Express! 🍕\n\n`;
+            message += `*--- MEU PEDIDO ---*\n\n`;
 
-            // Pizza Principal
-            message += `🍕 *Pizza Principal:* ${selections['pizza1-sabor'].value}\n`;
-            message += `  Borda da Pizza Principal: ${selections['pizza1-borda'].value} (R$ ${selections['pizza1-borda'].price.toFixed(2).replace('.', ',')})\n`;
+            message += `1. *Pizza Principal:* ${selections['pizza1-sabor'].value}\n`;
+            message += `   - Borda: ${selections['pizza1-borda'].value} (R$ ${selections['pizza1-borda'].price.toFixed(2).replace('.', ',')})\n\n`;
 
-            // Segunda Pizza
             if (selections['pizza2-sabor'].value !== 'Não Quero Segunda Pizza') {
-                message += `🍕 *Segunda Pizza:* ${selections['pizza2-sabor'].value}\n`;
-                message += `  Borda da Segunda Pizza: ${selections['pizza2-borda'].value} (R$ ${selections['pizza2-borda'].price.toFixed(2).replace('.', ',')})\n`;
+                message += `2. *Segunda Pizza:* ${selections['pizza2-sabor'].value}\n`;
+                message += `   - Borda: ${selections['pizza2-borda'].value} (R$ ${selections['pizza2-borda'].price.toFixed(2).replace('.', ',')})\n\n`;
             } else {
-                message += `🍕 *Segunda Pizza:* Não quero outra pizza (Combo com 1 pizza aplicada)\n`;
+                message += `2. *Segunda Pizza:* Não desejo. (Combo com 1 pizza aplicada)\n\n`;
             }
 
-            // Refrigerante
-            message += `🥤 *Refrigerante:* ${selections['refrigerante'].value}\n`;
+            message += `3. *Refrigerante:* ${selections['refrigerante'].value}\n\n`;
 
-            // Brotinhos
             if (selections['brotinho-doce'].length > 0) {
-                message += `\n✨ *Brotinhos Adicionais:*\n`;
-                selections['brotinho-doce'].forEach(brotinho => {
-                    message += `  - ${brotinho.value} (R$ ${brotinho.price.toFixed(2).replace('.', ',')})\n`;
+                message += `*--- BROTINHOS ADICIONAIS ---*\n`;
+                selections['brotinho-doce'].forEach((brotinho, index) => {
+                    message += `   - ${brotinho.value} (R$ ${brotinho.price.toFixed(2).replace('.', ',')})\n`;
                 });
+                message += `\n`;
             }
 
-            // Observações
             const observacoes = document.getElementById('observacoes').value.trim();
             if (observacoes) {
-                message += `\n📝 *Observações:* ${observacoes}\n`;
+                message += `*--- OBSERVAÇÕES ---*\n`;
+                message += `${observacoes}\n\n`;
             }
 
-            // Preço Total
             const totalDisplay = document.getElementById('total-price-display').innerText;
-            message += `\n💰 *Total Estimado:* ${totalDisplay.replace('Total Estimado: ', '')}\n\n`;
-            message += `Por favor, confirme meu pedido e o valor final. Obrigado!`;
+            message += `*--- TOTAL ESTIMADO ---*\n`;
+            message += `${totalDisplay.replace('Total Estimado: ', '')}\n\n`;
+            message += `Por favor, confirme os detalhes e o valor final. Aguardo! ✨`;
 
             // Codifica a mensagem para URL
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -903,8 +928,8 @@
                 { group: 'pizza1-sabor', selector: '.item-card:first-child' },
                 { group: 'pizza1-borda', selector: '.item-card[data-value="Normal"]' },
                 { group: 'pizza2-sabor', selector: '.item-card[data-value="Não Quero Segunda Pizza"]' },
-                { group: 'pizza2-borda', selector: '.item-card[data-value="Normal"]' },
-                { group: 'refrigerante', selector: '.item-card[data-value="Coca-Cola 2L"]' }, // Mudança para Coca-Cola como padrão
+                { group: 'pizza2-borda', selector: '.item-card[data-value="Normal"]' }, // Garante que borda normal da segunda pizza seja padrão
+                { group: 'refrigerante', selector: '.item-card[data-value="Coca-Cola 2L"]' },
             ];
 
             defaultSelections.forEach(({ group, selector }) => {
